@@ -3,8 +3,23 @@ import pandas as pd
 from time import sleep
 
 
-def teste_prefenrencias(): 
-    print('')
+dataset_games = pd.read_csv('all_video_games(cleaned).csv')
+gens = ['Action', 'Adventure', 'RPG', 'FPS', 'Sports', 'Racing', 'Strategy', 'Puzzle']
+dataset_games_filtered = dataset_games.loc[dataset_games['Genres'].isin(gens)]
+
+def teste_prefenrencias():
+    gens_escolhidos = [] 
+    print('agora ira começar um questionario para entendermos suas preferencias\n')
+    sleep(1)
+    print('digite dentre esses seus tres generos de jogos favoritos\n(Action, Adventure, RPG, FPS, Sports, Racing, Strategy, Puzzle')
+    gens_escolhidos.append(input('1.'))
+    gens_escolhidos.append(input('2.'))
+    gens_escolhidos.append(input('3.'))
+    dataset_filtered = dataset_games_filtered.loc[dataset_games_filtered['Genres'].isin(gens_escolhidos)]
+    print(dataset_filtered)
+
+
+    
 
 
 
@@ -19,9 +34,6 @@ def main_menu():
             menuentrada.menu_entrada()
             
 
-
-dataset_games = pd.read_csv("all_video_games(cleaned).csv")
-print(dataset_games)
 
 
 """ We mentioned in the chapter "A Brief 

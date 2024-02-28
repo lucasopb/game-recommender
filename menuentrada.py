@@ -1,3 +1,5 @@
+import sys
+
 usuarios = []
 
 def fazer_login():
@@ -50,9 +52,10 @@ def menu_entrada():
 
         if escolha == '1':
             cadastrar_usuario()
+            
         if escolha == '2':
             if fazer_login():
                 return True
 
         elif escolha == '3':
-            break
+            sys.exit()
