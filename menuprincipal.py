@@ -3,46 +3,55 @@ import pandas as pd
 from time import sleep
 import ast
 
-
 dataset_games = pd.read_csv('all_video_games(cleaned).csv')
+
+def pergunta1():
+    gens_escolhidos = []
+    print('digite dentre esses seus tres generos de jogos favoritos\n(Action, Adventure, RPG, FPS, Sports, Racing, Strategy, Puzzle')
+    gens_escolhidos.append(input('1.'))
+    gens_escolhidos.append(input('2.'))
+    gens_escolhidos.append(input('3.'))
+    return gens_escolhidos
+
+
+def pergunta2():
+    plataformas_escolhidas = []
+    plataforma = input('digite a plataforma de jogos que voce tem preferencia para jogar\n')
+    dataset_games['Platforms Info'] = dataset_games['Platforms Info'].apply(ast.literal_eval)
+    conf = 0
+    for element_info in dataset_games['Platforms Info']: 
+        for platform_info in element_info:
+            if platform_info['Platform'] == plataforma:
+                conf = 1
+        if conf == 1:
+            plataformas_escolhidas.append(element_info)
+            conf = 0
+    return plataformas_escolhidas
+
+
+def pergunta3():
+        nota_min = 0
+        resposta = input("voce se considera uma pessoa muito critica em relaçao a jogos?(sim/nao)\n").lower()
+        if resposta == "sim":
+            nota_min = 7
+        return nota_min
 
 
 def teste_prefenrencias():
-        gens_escolhidos = [] 
         print('agora ira começar um questionario para entendermos suas preferencias\n')
         sleep(1)
 
+        gens_escolhidos = pergunta1()
+        plataformas_escolhidas = pergunta2()
+        nota_min = pergunta3()  
 
-        print('digite dentre esses seus tres generos de jogos favoritos\n(Action, Adventure, RPG, FPS, Sports, Racing, Strategy, Puzzle')
-        gens_escolhidos.append(input('1.'))
-        gens_escolhidos.append(input('2.'))
-        gens_escolhidos.append(input('3.'))
-        dataset_filtered = dataset_games.loc[dataset_games['Genres'].isin(gens_escolhidos)]
+        dataset_filtered = dataset_games.loc[
+        dataset_games['Genres'].isin(gens_escolhidos) &
+        dataset_games['Platforms Info'].isin(plataformas_escolhidas) &
+        (dataset_games['User Score'] > nota_min)
+        ]
 
-
-
-        plataforma = input('digite a plataforma de jogos que voce tem preferencia para jogar\n')
-        dataset_filtered['Platforms Info'] = dataset_filtered['Platforms Info'].apply(ast.literal_eval)
-        plataformas_escolhidas = []
-        conf = 0
-        for element_info in dataset_filtered['Platforms Info']: 
-            for platform_info in element_info:
-                if platform_info['Platform'] == plataforma:
-                    conf = 1
-            if conf == 1:
-                plataformas_escolhidas.append(element_info)
-                conf = 0
-        new_dataset = dataset_filtered.loc[dataset_filtered['Platforms Info'].isin(plataformas_escolhidas)]
-        print(new_dataset)
-
-                     
-                
-                     
-                  
-
-
-    
-
+        print(dataset_filtered)
 
 
 def main_menu():
@@ -54,18 +63,3 @@ def main_menu():
             teste_prefenrencias()
         if resp == '2':
             menuentrada.menu_entrada()
-            
-
-
-
-""" We mentioned in the chapter "A Brief 
-Introduction to RPA" that one o
-f the main features of RPA is 
-that it is non-invasive. In other 
-words, although RPA works with other 
-software programs, it does not
-require them to provide a special
-interface. Instead, it directly 
-interacts with the user interface of 
-other software prog
-rams to simulate human interactions.  """
