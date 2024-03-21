@@ -4,7 +4,6 @@ usuarios = []
 
 def fazer_login():
     while True:
-        print(usuarios)
         nome_perfil = input("Digite o nome do perfil ou digite (0) para voltar: ").capitalize()
         if nome_perfil == '0':
             break
@@ -14,6 +13,7 @@ def fazer_login():
                 if senha == element['senha']:
                     global ind_perfil
                     ind_perfil = i
+                    print(f"bem vindo {element['nome']}")
                     return True
                 else:
                     print("Senha incorreta, tente novamente.")
